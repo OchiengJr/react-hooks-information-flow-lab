@@ -1,21 +1,16 @@
 import React, { useState } from "react";
 import Header from "./Header";
 
-
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
-  function onDarkModeClick() {
-    setIsDarkMode((isDarkMode) => !isDarkMode);
-  }
+  const toggleDarkMode = () => {
+    setDarkMode((prevDarkMode) => !prevDarkMode);
+  };
 
   return (
-    <Header isDarkMode= {isDarkMode} onDarkModeClick={onDarkModeClick}/> 
-
+    <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
   );
 }
-
-
-
 
 export default App;

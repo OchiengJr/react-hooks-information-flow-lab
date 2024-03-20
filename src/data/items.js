@@ -1,3 +1,4 @@
+// Define an array of items
 const items = [
   { id: 1, name: "Yogurt", category: "Dairy" },
   { id: 2, name: "Pomegranate", category: "Produce" },
@@ -6,4 +7,5 @@ const items = [
   { id: 5, name: "Cookies", category: "Dessert" },
 ];
 
+// Export the items array
 export default items;

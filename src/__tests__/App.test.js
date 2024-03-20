@@ -2,29 +2,23 @@ import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import App from "../components/App";
 
-test("displays in 'light' mode when initialized", () => {
-  const { container } = render(<App />);
-  expect(container.querySelector(".light")).toBeInTheDocument();
-});
+describe("App Component", () => {
+  beforeEach(() => {
+    render(<App />);
+  });
 
-test("changes to 'dark' mode when the button is clicked", () => {
-  const { container } = render(<App />);
-  expect(container.querySelector(".light")).toBeInTheDocument();
+  test("displays in 'light' mode when initialized", () => {
+    expect(screen.getByRole("main")).toHaveClass("light");
+  });
 
-  fireEvent.click(screen.getByText(/ Mode/));
+  test("changes to 'dark' mode when the button is clicked", () => {
+    fireEvent.click(screen.getByRole("button", { name: / Mode/ }));
+    expect(screen.getByRole("main")).toHaveClass("dark");
+  });
 
-  expect(container.querySelector(".dark")).toBeInTheDocument();
-});
-
-test("changes back to 'light' mode when the button is clicked twice", () => {
-  const { container } = render(<App />);
-  expect(container.querySelector(".light")).toBeInTheDocument();
-
-  fireEvent.click(screen.getByText(/ Mode/));
-
-  expect(container.querySelector(".dark")).toBeInTheDocument();
-
-  fireEvent.click(screen.getByText(/ Mode/));
-
-  expect(container.querySelector(".light")).toBeInTheDocument();
+  test("changes back to 'light' mode when the button is clicked twice", () => {
+    fireEvent.click(screen.getByRole("button", { name: / Mode/ }));
+    fireEvent.click(screen.getByRole("button", { name: / Mode/ }));
+    expect(screen.getByRole("main")).toHaveClass("light");
+  });
 });

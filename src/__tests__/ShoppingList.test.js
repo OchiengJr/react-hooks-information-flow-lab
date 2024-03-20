@@ -10,25 +10,22 @@ const testData = [
   { id: 5, name: "Cookies", category: "Dessert" },
 ];
 
-test("displays all items when initially rendered", () => {
-  const { container } = render(<ShoppingList items={testData} />);
-  expect(container.querySelector(".Items").children).toHaveLength(
-    testData.length
-  );
-});
-
-test("displays only items that match the selected category", () => {
-  const { container } = render(<ShoppingList items={testData} />);
-
-  fireEvent.change(screen.getByRole("combobox"), {
-    target: { value: "Dairy" },
+describe("ShoppingList Component", () => {
+  test("displays all items when initially rendered", () => {
+    render(<ShoppingList items={testData} />);
+    const items = screen.getAllByRole("listitem");
+    expect(items).toHaveLength(testData.length);
   });
 
-  expect(container.querySelector(".Items").children).toHaveLength(2);
+  test("displays only items that match the selected category", () => {
+    render(<ShoppingList items={testData} />);
+    
+    fireEvent.change(screen.getByRole("combobox"), { target: { value: "Dairy" } });
+    let items = screen.getAllByRole("listitem");
+    expect(items).toHaveLength(2);
 
-  fireEvent.change(screen.getByRole("combobox"), {
-    target: { value: "Dessert" },
+    fireEvent.change(screen.getByRole("combobox"), { target: { value: "Dessert" } });
+    items = screen.getAllByRole("listitem");
+    expect(items).toHaveLength(1);
   });
-
-  expect(container.querySelector(".Items").children).toHaveLength(1);
 });
